@@ -1,0 +1,7 @@
+*.o
+serveur
+client
+.vscode/
+EssaiCurses.c
+testCurse.c
+a.out
