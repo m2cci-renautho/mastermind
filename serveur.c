@@ -19,8 +19,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
-
-#include "fon.h"  /* Primitives de la boite a outils */
+#include "fon.h"		/* Primitives de la boite a outils */
 #include "masterMind.h" /*Primitives du masterMind*/
 
 #define SERVICE_DEFAUT "2111"
@@ -95,7 +94,7 @@ void serveur_appli(char *service)
 		pid = fork();
 		if (pid == 0)
 		{
-			//Processus fils
+			// Processus fils
 			h_close(socket_passif);
 			printf("Nouvelle connexion socket attribué %d nouveau fils\n", socket_client);
 			jouerMasterMindServeur(socket_client);
@@ -105,16 +104,15 @@ void serveur_appli(char *service)
 		}
 		else
 		{
-			//Processus père
-			
+			// Processus père
 
 			fils = waitpid(-1, &code_retour, WNOHANG);
-			if(WIFEXITED(code_retour)){
+			if (WIFEXITED(code_retour))
+			{
 				printf("Retour au father\n");
 			}
-			
-		
-			//Gerer les erreurs
+
+			// Gerer les erreurs
 		}
 	} while (1);
 }
@@ -149,7 +147,8 @@ void jouerMasterMindServeur(int socket_client)
 	char score = 0;
 	Combinaison combinaison, proposition;
 
-	creerCombinaisonAleatoire(&combinaison,0);
+	creerCombinaisonAleatoire(&combinaison, 0);
+	//Pour le test
 	printf("%s\n", combinaison.str);
 	do
 	{

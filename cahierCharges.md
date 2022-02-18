@@ -39,6 +39,5 @@ close
 # Algorithme du jeu
 
 TODO: Gérer les erreurs à chaque étape.
-TODO: Refactoriser algo.c et algo.h
 TODO: Gérer l'enchainement de plusieurs parties
-TODO: Gérer les problèmes de zombies...
+TODO: Vérifier les zombies
