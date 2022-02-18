@@ -156,5 +156,5 @@ void jouerMasterMindServeur(int socket_client)
 		comparerCombinaisons(combinaison, proposition, &result);
 		score++;
 		sendResultat(socket_client, result, score);
-	} while (score < NBCOUPS_MAX && result.bonnePosition != NBPIONS);
+	} while (score < NBCOUPS && result.bonnePosition != NBPIONS);
 }

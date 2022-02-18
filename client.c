@@ -111,9 +111,9 @@ void jouerUnMasterMind(int socket)
 		readResultat(socket, &res);
 		//Affichage du résultat
 		printResultat(reponses, 2 * res.score - 1, res);
-	} while (res.score < NBCOUPS_MAX && res.bonnePosition != NBPIONS);
+	} while (res.score < NBCOUPS && res.bonnePosition != NBPIONS);
 	endwin();
-	if (res.score < NBCOUPS_MAX)
+	if (res.score < NBCOUPS)
 	{
 		printf("Félicitations, vous avez gagné en %d coups !\n", (int) res.score);
 	}
