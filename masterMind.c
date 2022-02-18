@@ -179,10 +179,10 @@ void init_fenetres(WINDOW **propositions, WINDOW **reponses, WINDOW **colors, WI
     int col = 0;
     int ligne = 0;
 
-    *propositions = subwin(stdscr, 2 * NBCOUPS_MAX + 1, 2 * NBPIONS + 3, col, ligne);
+    *propositions = subwin(stdscr, 2 * NBCOUPS + 1, 2 * NBPIONS + 3, col, ligne);
     ligne += 2 * NBPIONS + 3;
-    *reponses = subwin(stdscr, 2 * NBCOUPS_MAX + 1, NBPIONS + 2, 0, ligne);
-    col += 2 * NBCOUPS_MAX + 1;
+    *reponses = subwin(stdscr, 2 * NBCOUPS + 1, NBPIONS + 2, 0, ligne);
+    col += 2 * NBCOUPS + 1;
     *colors = subwin(stdscr, 3, 2 * NBCOULEURS + 1, col, 0);
     col += 3;
     *saisie = subwin(stdscr, 3, 17, col, 0);
