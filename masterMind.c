@@ -14,7 +14,6 @@
  * @param comb La combinaison créée
  * @param distinct Booléen : si vrai, les couleurs choisies seront toutes distinctes.
  */
-
 void creerCombinaisonAleatoire(Combinaison *comb, int distinct)
 {
 
@@ -51,10 +50,10 @@ int appartient(const char *chaine, char c)
     return (i != longueur+1);
 }
 /**
- * @brief Renvoie vrai si et seulement si une chaine de caractère constitue une combinaison de couleur valide.
+ * @brief Renvoie vrai si et seulement si la combinaison de couleur est valide, c'est à dire que les couleurs sont bien dans ENSEMBLE_COULEURS.
  *
- * @param comb
- * @return int
+ * @param comb La combinaison à tester.
+ * @return True (1) ou False (0).
  */
 int estCombinaisonValide(Combinaison comb)
 {
@@ -92,7 +91,15 @@ int estCombinaisonValide(Combinaison comb)
         exit(1);
     }
 }
-
+/**
+ * @brief Ecrit dans @param result le résultat de la comparaison entre une combinaison et une proposition, c'est-à-dire donne le nombre de bâtons blancs (bonnes couleurs mal placées) et de bâtons rouges (bonnes couleurs bien placées)
+ * 
+ * @param comb La combinaison de référence
+ * @param proposition La combinaison proposée à comparer.
+ * @param result La structure Résultat qui va contenir le résultat de la comparaison.
+ * 
+ * Pré-condition : Les deux combinaisons sont valides.
+ */
 void comparerCombinaisons(Combinaison comb, Combinaison proposition, Resultat *result)
 {
 
@@ -116,11 +123,11 @@ void comparerCombinaisons(Combinaison comb, Combinaison proposition, Resultat *r
         }
     }
 }
-
-void saisirCombinaison(Combinaison *comb)
-{
-    fgets(comb->str, NBPIONS + 1, stdin);
-}
+/**
+ * @brief Initialise les couleurs (pour Ncurse) associées aux couleurs de ENSEMBLE_COULEURS. 
+ * Remarque : Les couleurs ont étés fixéees "à la main" en affichant à l'écran toutes les couleurs et leur indice afin de regarder quelles étaient les plus pertinentes.
+ * 
+ */
 void initColors()
 {
     start_color();
@@ -156,7 +163,14 @@ void initColors()
         }
     }
 }
-
+/**
+ * @brief Initialise les différentes fenêtres ncurses pour l'interface du jeu.
+ * 
+ * @param propositions Le plateau de jeu où apparaissent les propositions. 
+ * @param reponses La zone où apparaissent les réponses et les résultats des comparaisons.  
+ * @param colors Un rappel de toutes les couleurs disponibles et les caractères à saisir.
+ * @param saisie La zone de saisie des couleurs.
+ */
 void init_fenetres(WINDOW **propositions, WINDOW **reponses, WINDOW **colors, WINDOW **saisie)
 {
     initscr();
@@ -178,7 +192,13 @@ void init_fenetres(WINDOW **propositions, WINDOW **reponses, WINDOW **colors, WI
     box(*colors, ACS_VLINE, ACS_HLINE);
     box(*saisie, ACS_VLINE, ACS_HLINE);
 }
-
+/**
+ * @brief Affiche la combinaison à l'écran.
+ * 
+ * @param win Fenetre ncurses dans laquelle l'afficher.
+ * @param noLigne Numéro de la ligne de la fenêtre.
+ * @param comb La combinaison à afficher.
+ */
 void afficherCombinaison(WINDOW *win, int noLigne, Combinaison comb)
 {
 
@@ -192,7 +212,13 @@ void afficherCombinaison(WINDOW *win, int noLigne, Combinaison comb)
     }
     wrefresh(win);
 }
-
+/**
+ * @brief Permet d'entrer au clavier une proposition de combinaison.
+ * Ecrit dans @param prop la proposition saisie.
+ * 
+ * @param win La fenêtre de saisie.
+ * @param prop La proposition saisie.
+ */
 void saisirProposition(WINDOW *win, Combinaison *prop)
 {
     do
@@ -204,7 +230,14 @@ void saisirProposition(WINDOW *win, Combinaison *prop)
         wgetnstr(win, prop->str, NBPIONS);
     } while (!estCombinaisonValide(*prop));
 }
-
+/**
+ * @brief Permet de retrouver l'indice de la paire de couleur correspondant au caractère @param c.
+ * 
+ * @param c Le caractère correspondant à la couleur
+ * @return L'indice de la paire.
+ * 
+ * Pré-condition : @param c appartient à ENSEMBLE_COULEURS.
+ */
 int findColorPair(char c)
 {
 
@@ -214,7 +247,11 @@ int findColorPair(char c)
 
     return (i <= NBCOULEURS) ? (i) : -1;
 }
-
+/**
+ * @brief Affiche toutes les couleurs disponibles pour le jeu.
+ * 
+ * @param win Fenêtre d'affichage des couleurs.
+ */
 void afficherToutesCouleurs(WINDOW *win)
 {
 
@@ -226,7 +263,13 @@ void afficherToutesCouleurs(WINDOW *win)
     }
     wrefresh(win);
 }
-
+/**
+ * @brief Affiche un résultat à l'écran.
+ * 
+ * @param win Fenêtre d'affichage du résultat
+ * @param ligne Ligne à laquelle afficher.
+ * @param res Le résultat à afficher.
+ */
 void printResultat(WINDOW *win, int ligne, Resultat res)
 {
 
