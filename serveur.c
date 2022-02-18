@@ -26,7 +26,7 @@
 #define DEBUG 0
 
 void serveur_appli(char *service); /* programme serveur */
-void sendResultat(int socket, Resultat res, char score);
+void sendResultat(int socket, Resultat res);
 void readProposition(int socket, Combinaison *proposition);
 void jouerMasterMindServeur(int socket_client);
 
@@ -132,29 +132,29 @@ void readProposition(int socket, Combinaison *proposition)
  * @param res Le résultat de la proposition.
  * @param score Le score en cours.
  */
-void sendResultat(int socket, Resultat res, char score)
+void sendResultat(int socket, Resultat res)
 {
 	char resultat[3];
 	resultat[0] = res.bonneCouleur;
 	resultat[1] = res.bonnePosition;
-	resultat[2] = score;
+	resultat[2] = res.score;
 	h_writes(socket, resultat, 3);
 }
 
 void jouerMasterMindServeur(int socket_client)
 {
 	Resultat result;
-	char score = 0;
 	Combinaison combinaison, proposition;
 
+	result.score = 0;
 	creerCombinaisonAleatoire(&combinaison, 0);
 	//Pour le test
-	printf("%s\n", combinaison.str);
+	// printf("%s\n", combinaison.str);
 	do
 	{
 		readProposition(socket_client, &proposition);
 		comparerCombinaisons(combinaison, proposition, &result);
-		score++;
-		sendResultat(socket_client, result, score);
-	} while (score < NBCOUPS && result.bonnePosition != NBPIONS);
+		result.score++;
+		sendResultat(socket_client, result);
+	} while (result.score < NBCOUPS && result.bonnePosition != NBPIONS);
 }
