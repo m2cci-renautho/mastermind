@@ -107,11 +107,6 @@ void serveur_appli(char *service)
 			// Processus père
 
 			fils = waitpid(-1, &code_retour, WNOHANG);
-			if (WIFEXITED(code_retour))
-			{
-				printf("Retour au father\n");
-			}
-
 			// Gerer les erreurs
 		}
 	} while (1);
