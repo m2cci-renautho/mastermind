@@ -8,7 +8,8 @@ output: pdf_document
 # Cahier des charges du Mastermind.
 
 ## Choix du serveur et des protocoles
-L'objectif est de créer un serveur itératif, de le lancer, puis de se faire connecter un client. La communication sera faite grâce aux protocoles TCP/IP. Le choix dans un premier temps d'un serveur itératif se justifie par le fait qu'il n'y aura que peu de connections simultanées au serveur. 
+L'objectif est de créer un serveur itératif, de le lancer, puis d'attendre une connexion client. La communication sera faite grâce aux protocoles TCP/IP. Le choix du protocole TCP, avec création de processus fils, permet à plusieurs clients de se connecter simultanément au serveur.
+
 
 ## Algorithme du serveur
 
@@ -19,8 +20,12 @@ bind
 listen
 faire
     accept
-    shutdown
-    read/write /*traitement*/
+    fork
+    Si fils :
+        shutdown
+        read/write /*traitement*/
+        close
+        exit
     close
 tant que(vrai)
 close
@@ -35,9 +40,3 @@ connect
 read/write /*traitement, boucle du jeu*/
 close
 ```
-
-# Algorithme du jeu
-
-TODO: Gérer les erreurs à chaque étape.
-TODO: Gérer l'enchainement de plusieurs parties
-TODO: Vérifier les zombies
